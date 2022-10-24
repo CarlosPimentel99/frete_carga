@@ -9,6 +9,7 @@ class Frete {
 	private $local_entrega;
 	private $valor;
 	private $status;
+	private $observacao;
 
 	public function __get($atributo) {
 		return $this->$atributo;

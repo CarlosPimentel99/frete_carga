@@ -12,7 +12,7 @@ class FreteService {
 	}
 
 	public function inserir() { //create
-		$query = 'insert into tb_fretes(titulo, tp_caminhao, peso_carga, local_coleta, local_entrega, valor, status) values(?, ?, ?, ?, ?, ?, 1)';
+		$query = 'insert into tb_fretes(titulo, tp_caminhao, peso_carga, local_coleta, local_entrega, valor, status, observacao) values(?, ?, ?, ?, ?, ?, 1, ?)';
 		$stmt = $this->conexao->prepare($query);
 		$stmt->bindValue(1, $this->frete->__get('titulo'));
 		$stmt->bindValue(2, $this->frete->__get('tp_caminhao'));
@@ -20,13 +20,14 @@ class FreteService {
 		$stmt->bindValue(4, $this->frete->__get('local_coleta'));
 		$stmt->bindValue(5, $this->frete->__get('local_entrega'));
 		$stmt->bindValue(6, $this->frete->__get('valor'));
+		$stmt->bindValue(7, $this->frete->__get('observacao'));
 		$stmt->execute();
 	}
 
 	public function recuperar() { //read
 		$query = '
 			select 
-				f.id_frete, f.titulo, f.tp_caminhao, f.peso_carga, f.local_coleta, f.local_entrega, f.valor, f.status
+				f.id_frete, f.titulo, f.tp_caminhao, f.peso_carga, f.local_coleta, f.local_entrega, f.valor, f.status, f.observacao
 			from 
 				tb_fretes as f				
 		';		
@@ -43,7 +44,8 @@ class FreteService {
 						peso_carga = ?,
 						local_coleta = ?,
 						local_entrega = ?,
-						valor = ?					    
+						valor = ?,
+						observacao = ?					    
                       where id_frete = ?";
         
 		$stmt = $this->conexao->prepare($query);
@@ -53,7 +55,8 @@ class FreteService {
 		$stmt->bindValue(4, $this->frete->__get('local_coleta'));
 		$stmt->bindValue(5, $this->frete->__get('local_entrega'));
 		$stmt->bindValue(6, floatval(str_replace(',', '.', $this->frete->__get('valor'))));
-		$stmt->bindValue(7, $this->frete->__get('id'));
+		$stmt->bindValue(7, floatval(str_replace(',', '.', $this->frete->__get('observacao'))));
+		$stmt->bindValue(8, $this->frete->__get('id'));
 		return $stmt->execute(); 
 	}
 
@@ -68,7 +71,7 @@ class FreteService {
 	public function carregar() { //read
 		$query = '
 			select 
-				f.id_frete, f.titulo, f.tp_caminhao, f.peso_carga, f.local_coleta, f.local_entrega, f.valor, f.status
+				f.id_frete, f.titulo, f.tp_caminhao, f.peso_carga, f.local_coleta, f.local_entrega, f.valor, f.status, f.observacao
 			from 
 				tb_fretes as f
 			where f.id_frete = ?

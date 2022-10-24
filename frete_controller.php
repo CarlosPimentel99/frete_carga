@@ -16,7 +16,8 @@
 		$frete->__set('peso_carga', $_POST['peso_carga']);		
 		$frete->__set('local_coleta', $_POST['local_coleta']);		
 		$frete->__set('local_entrega', $_POST['local_entrega']);		
-		$frete->__set('valor', $_POST['valor']);		
+		$frete->__set('valor', $_POST['valor']);	
+		$frete->__set('observacao', $_POST['observacao']);		
 
 		$conexao = new Conexao();
 
@@ -44,6 +45,7 @@
 		$frete->__set('local_coleta', $_POST['local_coleta']);		
 		$frete->__set('local_entrega', $_POST['local_entrega']);		
 		$frete->__set('valor', $_POST['valor']);
+		$frete->__set('observacao', $_POST['observacao']);
 
 
 		$conexao = new Conexao();
